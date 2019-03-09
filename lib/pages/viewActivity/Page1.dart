@@ -4,6 +4,7 @@ import 'package:beta_balmer/model/activities.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:beta_balmer/model/reviews.dart';
 import 'package:beta_balmer/pages/viewActivity/Page2.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Page1 extends StatelessWidget {
   final Activities activity;
@@ -144,6 +145,17 @@ class Page1 extends StatelessWidget {
                     fontSize: 15.0,
                     color: Colors.black,
                     fontWeight: FontWeight.bold)),
+                    Column(
+  children: <Widget>[
+    Container(
+      //height: MediaQuery.of(context).size.height,
+      //width: MediaQuery.of(context).size.width,
+      child: GoogleMap(
+        onMapCreated: (GoogleMapController controller) {},
+      ),
+    ),
+  ],
+),
             ////////AQUI VA EL CODIGO DE GOOGLE MAPS////////////
           ],
         ),

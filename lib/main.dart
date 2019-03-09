@@ -44,7 +44,6 @@ class MyApp extends StatelessWidget {
         UIData.activityRoute5: (BuildContext context) => Page5Act(),
         UIData.activityRoute6: (BuildContext context) => Page6Act(),
         UIData.activityRoute7: (BuildContext context) => Page7Act(),
-        UIData.activity1: (BuildContext context) => Page1(),
         
 
       

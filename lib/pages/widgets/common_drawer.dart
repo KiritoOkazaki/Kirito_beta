@@ -9,6 +9,13 @@ class CommonDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           UserAccountsDrawerHeader(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                 colors: [const Color(0xFF00827D), const Color(0xFF46A040),const Color(0xFF2E7DE1), const Color(0xFF94348C)],
+        begin: Alignment.bottomLeft,
+        end: Alignment.topRight,
+              ),
+            ),
             accountName: Text(
               "Pawan Kumar",
             ),
@@ -16,6 +23,7 @@ class CommonDrawer extends StatelessWidget {
               "mtechviral@gmail.com",
             ),
             currentAccountPicture: new CircleAvatar(
+              backgroundColor: Colors.transparent,
               backgroundImage: new AssetImage(UIData.balmerLogo),
             ),
           ),

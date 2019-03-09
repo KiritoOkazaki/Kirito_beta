@@ -1,3 +1,5 @@
+import 'package:beta_balmer/pages/viewActivity/Page3.dart';
+import 'package:beta_balmer/pages/viewActivity/Page4.dart';
 import 'package:beta_balmer/utils/uidata.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/classes/event.dart';
@@ -90,7 +92,10 @@ class _CalendarSelectState extends State<CalendarSelect> {
                             color: Colors.white, fontWeight: FontWeight.bold),
                       ),
                       onPressed: () {
-                        print('NUMERO DE SESIONES: ${datesGrowable.length}');
+                        Navigator.of(context).push(
+                           MaterialPageRoute(
+                      builder: (context)=> Page3(),
+                        ));
                         //Navigator.pushNamed(context, UIData.activityRoute6);
                       }),
                 ),
