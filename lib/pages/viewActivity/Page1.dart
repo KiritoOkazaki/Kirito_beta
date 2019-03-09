@@ -4,10 +4,11 @@ import 'package:beta_balmer/model/activities.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:beta_balmer/model/reviews.dart';
 import 'package:beta_balmer/pages/viewActivity/Page2.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 
 class Page1 extends StatelessWidget {
   final Activities activity;
+
 
   Page1({Key key, @required this.activity}) : super(key: key);
 
@@ -145,22 +146,19 @@ class Page1 extends StatelessWidget {
                     fontSize: 15.0,
                     color: Colors.black,
                     fontWeight: FontWeight.bold)),
-                    Column(
-  children: <Widget>[
-    Container(
-      //height: MediaQuery.of(context).size.height,
-      //width: MediaQuery.of(context).size.width,
-      child: GoogleMap(
-        onMapCreated: (GoogleMapController controller) {},
-      ),
-    ),
-  ],
-),
+
+           /* SizedBox(
+              width: 200,
+              height: 150,
+              child: GoogleMap(
+               
+              ),
+            ),*/
             ////////AQUI VA EL CODIGO DE GOOGLE MAPS////////////
           ],
         ),
       );
-      Widget description7() => Container(
+  Widget description7() => Container(
         padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
           border: Border(
@@ -176,7 +174,8 @@ class Page1 extends StatelessWidget {
                     fontSize: 15.0,
                     color: Colors.black,
                     fontWeight: FontWeight.bold)),
-            new Text("En caso de requerir algun instrumento nosotros te lo proporcionaremos")
+            new Text(
+                "En caso de requerir algun instrumento nosotros te lo proporcionaremos")
           ],
         ),
       );
@@ -198,17 +197,19 @@ class Page1 extends StatelessWidget {
                     fontWeight: FontWeight.bold)),
             new Text("\n${activity.description}"),
             new GestureDetector(
-  onTap: () {
-    print("Terminos y condiciones");
-    //Navigator.pushNamed(context, "myRoute");
-  },
-  child: new Text("Ver condiciones de cancelacion", style: TextStyle(color: Colors.greenAccent),),
-)
-
+              onTap: () {
+                print("Terminos y condiciones");
+                //Navigator.pushNamed(context, "myRoute");
+              },
+              child: new Text(
+                "Ver condiciones de cancelacion",
+                style: TextStyle(color: Colors.greenAccent),
+              ),
+            )
           ],
         ),
       );
-  
+
   Widget organizator() => Container(
         padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
@@ -234,27 +235,26 @@ class Page1 extends StatelessWidget {
                 Column(
                   children: <Widget>[
                     Text(activity.personName,
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16.0,
-                          )),
-                   
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16.0,
+                        )),
                   ],
                 ),
                 Column(
                   children: <Widget>[
                     new FlatButton(
-              child: new Text(
-                "Enviar Mensaje",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              color: Colors.grey.withOpacity(0.8),
-              textColor: Colors.green,
-              onPressed: () {
-                print("enviar mensaje");
-              },
-            ),
+                      child: new Text(
+                        "Enviar Mensaje",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      color: Colors.grey.withOpacity(0.8),
+                      textColor: Colors.green,
+                      onPressed: () {
+                        print("enviar mensaje");
+                      },
+                    ),
                   ],
                 )
               ],
@@ -431,13 +431,10 @@ class Page1 extends StatelessWidget {
         ),
       );
 
-      Widget continueButton(BuildContext context) => Container(
+  Widget continueButton(BuildContext context) => Container(
         decoration: new BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-            const Color(0xFF00827D),
-            Colors.yellow
-            ],
+            colors: [const Color(0xFF00827D), Colors.yellow],
             begin: Alignment.bottomLeft,
             end: Alignment.topRight,
           ),
@@ -449,11 +446,9 @@ class Page1 extends StatelessWidget {
                   TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
             onPressed: () {
-              Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context)=> Page2(),
-                    )
-                  );
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => Page2(),
+              ));
             }),
       );
   Widget bodyData2(BuildContext context) => Container(
@@ -487,7 +482,9 @@ class Page1 extends StatelessWidget {
               description7(),
               description8(),
               continueButton(context),
-              SizedBox(height: 20.0,)
+              SizedBox(
+                height: 20.0,
+              )
             ],
           ),
         ),

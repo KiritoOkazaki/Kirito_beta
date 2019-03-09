@@ -1,5 +1,6 @@
 import 'package:beta_balmer/utils/uidata.dart';
 import 'package:flutter/material.dart';
+import 'package:location/location.dart';
 
 class Page6Act extends StatefulWidget {
   @override
@@ -11,8 +12,8 @@ class _Page6ActState extends State<Page6Act> {
   List _cities = ["Guadalajara", "Morelia", "Ciudad de Mexico", "Monterrey"];
   List<DropdownMenuItem<String>> _dropDownMenuItems;
   String _currentCity;
-   TextEditingController _directController = new TextEditingController();
-   TextEditingController _directController2 = new TextEditingController();
+  TextEditingController _directController = new TextEditingController();
+  TextEditingController _directController2 = new TextEditingController();
 
   
   @override
