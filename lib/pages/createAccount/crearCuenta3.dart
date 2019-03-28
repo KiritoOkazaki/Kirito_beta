@@ -127,7 +127,6 @@ class _CrearCuenta3State extends State<CrearCuenta3> {
 
   void interesesSeleccionados(){
     _selectableTags.forEach((item){
-      print("el valor del item es ${item.active}");
       if(item.active){
         print(item.id);
         _idSelected.add(item.id);

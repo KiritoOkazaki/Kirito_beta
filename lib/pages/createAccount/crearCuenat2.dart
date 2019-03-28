@@ -1,8 +1,14 @@
 import 'package:beta_balmer/pages/createAccount/crearCuenta3.dart';
+import 'package:beta_balmer/services/postService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CrearCuenta2 extends StatefulWidget {
+  final String correo;
+  final String password;
+
+  const CrearCuenta2({Key key, this.correo, this.password}): super(key:key);
+
   @override
   _CrearCuenta2State createState() => _CrearCuenta2State();
 }
@@ -12,6 +18,7 @@ class _CrearCuenta2State extends State<CrearCuenta2> {
   FixedExtentScrollController fixedExtentScrollController =
       new FixedExtentScrollController();
 
+  
   List _act = ["Guadalajara", "Morelia", "Monterrey", "Ciudad de Mexico"];
   List<DropdownMenuItem<String>> _dropDownMenuItems;
   String _currentAct;
@@ -110,6 +117,8 @@ class _CrearCuenta2State extends State<CrearCuenta2> {
                 minSize: 20.0,
                 onPressed: (){
                    print("Seleccionaste $_currentAct");
+                   postCreateUser(widget.correo, widget.password,_currentAct);
+                   ///AQUI MANDAS A LLAMAR AL SERVICIO
                    Navigator.of(context)
                                         .push(MaterialPageRoute(
                                       builder: (context) => CrearCuenta3(),
@@ -129,6 +138,12 @@ class _CrearCuenta2State extends State<CrearCuenta2> {
   void changedDropDownItem(String selectedAct) {
     setState(() {
       _currentAct = selectedAct;
+    });
+  }
+
+  void postCreateUser(email, password, ciudad) async {
+    await requestCreateUser(context, email, password, ciudad).then((s) {
+     
     });
   }
 }

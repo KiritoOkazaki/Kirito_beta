@@ -128,7 +128,7 @@ class _CrearCuenta1State extends State<CrearCuenta1> {
                                   onPressed: () {
                                     Navigator.of(context)
                                         .push(MaterialPageRoute(
-                                      builder: (context) => CrearCuenta2(),
+                                      builder: (context) => CrearCuenta2(correo:_emailController.text, password:_passwordController.text)
                                     ));
                                     //Navigator.pop(context);
                                   },
