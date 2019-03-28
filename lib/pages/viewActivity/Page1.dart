@@ -1,13 +1,33 @@
 import 'package:beta_balmer/utils/uidata.dart';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:beta_balmer/model/activities.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:beta_balmer/model/reviews.dart';
 import 'package:beta_balmer/pages/viewActivity/Page2.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 
 class Page1 extends StatelessWidget {
   final Activities activity;
+  GoogleMapController mapController;
+  CameraPosition _position;
+  //Map<MarkerId,Marker> markers = <MarkerId,Marker>{};
+
+
+
+  int _markerIdCounter =1;
+
+  void _onMapCreated(GoogleMapController controller){
+    mapController =controller;
+    /*mapController.addMarker(
+      MarkerOptions(
+        position: LatLng(activity.latitude, activity.longitude),
+        infoWindowText: InfoWindowText("Actividad", "${activity.price}"),
+        icon: BitmapDescriptor.defaultMarker
+      )
+    );*/
+  }
 
 
   Page1({Key key, @required this.activity}) : super(key: key);
@@ -147,13 +167,19 @@ class Page1 extends StatelessWidget {
                     color: Colors.black,
                     fontWeight: FontWeight.bold)),
 
-           /* SizedBox(
+           SizedBox(
               width: 200,
               height: 150,
               child: GoogleMap(
-               
+                onMapCreated: _onMapCreated,
+                options: GoogleMapOptions(
+                  cameraPosition: CameraPosition(
+                    target: LatLng(activity.latitude, activity.longitude),
+                    zoom: 10.0,
+                  )
+                ),
               ),
-            ),*/
+            ),
             ////////AQUI VA EL CODIGO DE GOOGLE MAPS////////////
           ],
         ),
@@ -511,4 +537,24 @@ class Page1 extends StatelessWidget {
       body: bodyData2(context),
     );
   }
+
+  void _updateCameraPosition(CameraPosition position){
+    _position =position;
+  }
+
+  /*void _onAddMarker(){
+    final String markerIdVal = 'marker_id_$_markerIdCounter';
+    final MarkerId markerId =MarkerId(markerIdVal);
+    final Marker marker =Marker(
+      markerId: markerId,
+      position: LatLng(activity.latitude, activity.longitude),
+      infoWindow: InfoWindow(title: activity.title, snippet: activity.price)
+    );
+
+  markers[markerId] =marker;
+
+  print(markers);
+    
+
+  }*/
 }

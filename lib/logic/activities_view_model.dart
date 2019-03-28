@@ -24,6 +24,9 @@ class ActivitiesViewModel {
             totalSesion: 20,
             award: true,
             quantity: 0,
+            latitude: 19.7017572,
+            longitude: -101.1945599
+
           ),
           Activities(
             idAct: 2,
@@ -41,6 +44,8 @@ class ActivitiesViewModel {
             totalSesion: 10,
             award: false,
             quantity: 0,
+            latitude: 20.6759204,
+            longitude: -103.4629881
           ),
 
            

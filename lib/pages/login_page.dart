@@ -1,8 +1,18 @@
+import 'package:beta_balmer/services/postService.dart';
 import 'package:beta_balmer/utils/uidata.dart';
 import 'package:flutter/material.dart';
+import 'package:beta_balmer/pages/createAccount/crearCuenta1.dart';
 
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
 
-class LoginPage extends StatelessWidget {
+class _LoginPageState extends State<LoginPage> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool barIndicator = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,8 +43,9 @@ class LoginPage extends StatelessWidget {
             height: 20.0,
           ),
           Text(
-            "Bienvenido a ${UIData.appName}",
-            style: TextStyle(fontWeight: FontWeight.w700, color: Colors.green),
+            "Descube nuevas actividades",
+            style:
+                TextStyle(fontWeight: FontWeight.w700, color: Colors.lightBlue),
           ),
           SizedBox(
             height: 5.0,
@@ -54,22 +65,55 @@ class LoginPage extends StatelessWidget {
             Container(
               padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 30.0),
               child: TextFormField(
+                controller: _emailController,
                 maxLines: 1,
                 decoration: InputDecoration(
-                  hintText: "Ingresa tu nombre de Usuario",
-                  labelText: "Nombre de Usuario",
+                  hintText: "Ingresa tu correo",
+                  labelText: "Correo",
                 ),
               ),
             ),
             Container(
               padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 30.0),
               child: TextFormField(
+                controller: _passwordController,
                 maxLines: 1,
                 obscureText: true,
                 decoration: InputDecoration(
                   hintText: "Ingresa tu contraseña",
                   labelText: "Contraseña",
                 ),
+              ),
+            ),
+            SizedBox(
+              height: 15.0,
+            ),
+            GestureDetector(
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    // return object of type Dialog
+                    return AlertDialog(
+                      title: new Text("Olvide mi contraseña"),
+                      content: new Text(
+                          "Ingresa tu correo y te enviaremos instrucciones"),
+                      actions: <Widget>[
+                        // usually buttons at the bottom of the dialog
+                        new FlatButton(
+                          child: new Text("Cerrar"),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              child: Text(
+                "Olvide mi contraseña",
+                textAlign: TextAlign.end,
               ),
             ),
             SizedBox(
@@ -85,20 +129,60 @@ class LoginPage extends StatelessWidget {
                   "Ingresar",
                   style: TextStyle(color: Colors.white),
                 ),
-                color: Colors.green,
+                color: Colors.lightBlue,
                 onPressed: () {
+                  //postLogin(_emailController.text, _passwordController.text);
+                  //if(barIndicator==true)
+                  // _onLoading();
                   Navigator.pushNamed(context, "/homePage");
-                },//API Y ROUTE AL HOME PAGE
+                }, //API Y ROUTE AL HOME PAGE
               ),
             ),
             SizedBox(
               height: 5.0,
             ),
-            Text(
-              "CREA UNA CUENTA",
-              style: TextStyle(color: Colors.grey),
+            GestureDetector(
+              onTap: () {
+                print("Nueva pantalla");
+                Navigator.of(context).pushNamed(UIData.createAccount);
+             
+              },
+              child: Text(
+                "CREA UNA CUENTA",
+                style: TextStyle(color: Colors.grey),
+              ),
             ),
           ],
         ),
       );
+
+  void postLogin(email, password) async {
+    await requestLoginAPI(context, email, password).then((s) {
+      return barIndicator = s;
+    });
+  }
+
+  void _onLoading() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      child: new Dialog(
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            new CircularProgressIndicator(
+              backgroundColor: Colors.white,
+            ),
+            new SizedBox(
+              height: 20.0,
+              width: 10.0,
+            ),
+            new Text("Iniciando Sesion...",
+                style: TextStyle(color: Colors.black)),
+          ],
+        ),
+      ),
+    );
+  }
 }

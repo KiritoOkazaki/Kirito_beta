@@ -10,6 +10,8 @@ class Activities {
   String direccion;
   String idioma;
   double rating;
+  double latitude;
+  double longitude;
   bool favorite;
   String price;
   String types;
@@ -34,7 +36,9 @@ Activities(
         this.types,
         this.totalSesion,
         this.award,
-        this.quantity
+        this.quantity,
+        this.latitude,
+        this.longitude
       });
 
   

@@ -14,7 +14,7 @@ class UIData {
   static const String activityRoute5 = "/activityPage5";
   static const String activityRoute6 = "/activityPage6";
   static const String activityRoute7 = "/activityPage7";
-
+  static const String createAccount = "/crearCuenta";
   static const String activity1 ="/activity1";
   //strings
   static const String appName = "Balmer App";
@@ -31,6 +31,7 @@ class UIData {
   static const String balmerLogo = "$imageDir/LOGO-06.png";
   static const String balmerLogo2 = "$imageDir/LOGO-04.png";
   static const String balmerLogoInit = "$imageDir/LOGO-01.png";
+  static const String homeSVG = "$imageDir/Home.svg";
 
   //login
   static const String enter_code_label = "Phone Number";

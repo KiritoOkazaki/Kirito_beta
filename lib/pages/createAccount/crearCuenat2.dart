@@ -1,18 +1,18 @@
-import 'package:flutter/material.dart';
+import 'package:beta_balmer/pages/createAccount/crearCuenta3.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:beta_balmer/pages/widgets/common_scaffold.dart';
-import 'package:beta_balmer/utils/uidata.dart';
+import 'package:flutter/material.dart';
 
-class ActivityPage extends StatefulWidget {
+class CrearCuenta2 extends StatefulWidget {
   @override
-  _ActivityPageState createState() => _ActivityPageState();
+  _CrearCuenta2State createState() => _CrearCuenta2State();
 }
 
-class _ActivityPageState extends State<ActivityPage> {
+class _CrearCuenta2State extends State<CrearCuenta2> {
+ 
   FixedExtentScrollController fixedExtentScrollController =
       new FixedExtentScrollController();
 
-  List _act = ["Curso", "Actividad Recreativa", "Entrenamiento"];
+  List _act = ["Guadalajara", "Morelia", "Monterrey", "Ciudad de Mexico"];
   List<DropdownMenuItem<String>> _dropDownMenuItems;
   String _currentAct;
 
@@ -78,7 +78,7 @@ class _ActivityPageState extends State<ActivityPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               new Text(
-                "Selecciona el \nTipo de Actividad ",
+                "Selecciona tu Ciudad ",
                 style: TextStyle(
                     fontSize: 30,
                     color: Colors.white,
@@ -109,8 +109,12 @@ class _ActivityPageState extends State<ActivityPage> {
                 color: Colors.white,
                 minSize: 20.0,
                 onPressed: (){
-                   print("Selecciona $_currentAct");
-                  Navigator.pushNamed(context, UIData.activityRoute2);
+                   print("Seleccionaste $_currentAct");
+                   Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) => CrearCuenta3(),
+                                    ));
+                  //Navigator.pushNamed(context, UIData.activityRoute2);
                 },
               ),
 

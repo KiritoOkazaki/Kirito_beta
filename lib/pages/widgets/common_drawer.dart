@@ -79,6 +79,18 @@ class CommonDrawer extends StatelessWidget {
             ),
           ),
           Divider(),
+          new ListTile(
+            title: Text(
+              "Salir",
+              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0),
+              ),
+              leading: new IconButton(icon: new Icon(Icons.exit_to_app,color: Colors.red,), onPressed: (){
+          //Area de funcionamiento del boton salir
+          //authenticationBloc.onLogout();
+          Navigator.of(context).pushNamedAndRemoveUntil(UIData.loginRoute, (Route <dynamic> route)=> false);
+          }),
+          )
+          
           //MyAboutTile()
         ],
       ),

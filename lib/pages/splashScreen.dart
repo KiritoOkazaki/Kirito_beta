@@ -6,7 +6,7 @@ import 'package:beta_balmer/pages/login_page.dart';
 class SplashBalmerScreen extends StatelessWidget{
   Widget build(BuildContext context){
     return new SplashScreen(
-      seconds: 10,
+      seconds: 2,
       navigateAfterSeconds: LoginPage(),
       image: Image.asset(UIData.balmerLogoInit, height: 200,width: 200, alignment: Alignment.center,),
       photoSize: 100.0,

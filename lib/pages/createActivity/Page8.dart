@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'package:beta_balmer/pages/createActivity/Page9.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Page8Act extends StatefulWidget {
   @override
@@ -9,7 +11,16 @@ class Page8Act extends StatefulWidget {
 
 class _Page8ActState extends State<Page8Act> {
 TextEditingController _controller = new TextEditingController();
+File _image;
 
+Future getImage() async {
+  var img =await ImagePicker.pickImage(source: ImageSource.gallery);
+
+  setState(() {
+    _image = img;
+  });
+}
+ 
 Widget video() => Container(
   child: Column(
     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -45,6 +56,8 @@ Widget video() => Container(
       ));
 
   Widget imageMain() => Container(
+    height: 250,
+    width: 250,
         child: Card(
           color: Colors.white,
           child: Center(
@@ -53,13 +66,34 @@ Widget video() => Container(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
               FlatButton.icon(icon: Icon(FontAwesomeIcons.camera,
-                    size: 110.0, color: Colors.grey.withOpacity(0.5)),label: new Text(""), onPressed: (){ print("image");},
+                    size: 70.0, color: Colors.grey.withOpacity(0.5)),label: new Text(""), onPressed: getImage
               )
               ],
             ),
           ),
         ),
        
+      );
+
+      Widget gridImages() => new Container(
+        child: GridView.builder(
+        itemCount: 6,
+        gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+        itemBuilder: (BuildContext context, int index){
+          return new GestureDetector(
+            child: new Card(
+              elevation: 5.0,
+              child: Container(
+               // alignment: Alignment.centerLeft,
+               // margin: new EdgeInsets.only(top: 10, bottom: 10, left: 10.0),
+                child: new Icon(FontAwesomeIcons.camera, color: Colors.grey.withOpacity(0.5),),
+              ),
+            ),
+            onTap: getImage,
+          );
+        },
+      )
+
       );
 
        Widget continueButton() => Container(
@@ -90,15 +124,23 @@ Widget video() => Container(
         child: Center(
           child: ListView(
             shrinkWrap: true,
-            padding: EdgeInsets.only(left: 24.0, right: 24.0),
+            padding: EdgeInsets.all(8.0),
             children: <Widget>[
-            titles(), 
-            imageMain(),
-            SizedBox(height: 70.0,),
-            video(),
-            SizedBox(height: 20,),
-            continueButton()
-            //gridImage(),
+              titles(),
+              Container(padding: EdgeInsets.all(8.0),),
+              imageMain(),
+              SizedBox(height: 5.0,),
+              SizedBox(
+                width: 300,
+                height: 270,
+                child: gridImages()
+              ),
+              SizedBox(height: 10.0,),
+              video(),
+              SizedBox(height: 8.0,),
+              continueButton()
+            
+
             ],
           ),
         ),

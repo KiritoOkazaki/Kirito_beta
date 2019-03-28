@@ -30,7 +30,8 @@ class _Page9ActState extends State<Page9Act> {
 
   Widget ratingStack() => Positioned(
         top: 270.0,
-        //left: 10.0,
+
+        left: 150.0,
         child: Container(
           padding: EdgeInsets.all(4.0),
           child: Row(
@@ -45,7 +46,7 @@ class _Page9ActState extends State<Page9Act> {
                 width: 10.0,
               ),
               Text(
-                "4.9",
+                "_ _",
                 style: TextStyle(color: Colors.black, fontSize: 15.0),
               ),
               SizedBox(

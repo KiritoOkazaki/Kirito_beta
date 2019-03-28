@@ -1,6 +1,9 @@
+import 'dart:async';
 import 'package:beta_balmer/utils/uidata.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:location/location.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Page6Act extends StatefulWidget {
   @override
@@ -14,12 +17,44 @@ class _Page6ActState extends State<Page6Act> {
   String _currentCity;
   TextEditingController _directController = new TextEditingController();
   TextEditingController _directController2 = new TextEditingController();
+  LocationData _currentLocation;
+  LocationData _startLocation;
+  Location _location = new Location();
+  GoogleMapController mapController;
+  MapType _currentMapType =MapType.normal;
+  double latitude;
+  double longitude;
 
+  final LatLng _center =const LatLng(19.7046682, -101.1153807);
+
+
+  void _onMapCreated(GoogleMapController controller){
+    mapController =controller;
+  }
+
+  
+
+_getLocation() async {
+    LocationData location;
+    try {
+      location = await _location.getLocation();
+    } on PlatformException {
+    }
+
+    setState(() {
+      _startLocation =location;
+      latitude =_startLocation.latitude;
+      longitude =_startLocation.longitude;
+    });
+    print("start location latitude: ${_startLocation.latitude} \n longitude: ${_startLocation.longitude}");
+
+  }
   
   @override
   void initState() {
     _dropDownMenuItems = getDropDownMenuItems();
     _currentCity = _dropDownMenuItems[0].value;
+    _getLocation();
     super.initState();
   }
 
@@ -151,17 +186,17 @@ class _Page6ActState extends State<Page6Act> {
         ),
       );
 
-      Widget googleMap()=>Container(
-        padding: const EdgeInsets.all(15.0),
-        decoration: BoxDecoration(
-          border: Border(
-            top: BorderSide(width: 1.0, color: Colors.grey),
+      Widget googleMap()=> SizedBox(
+        width: 300,
+        height: 200,
+        child: GoogleMap(
+          onMapCreated: _onMapCreated,
+          options: GoogleMapOptions(
+            cameraPosition: CameraPosition(target: _center, zoom: 17),
           ),
+        
         ),
-        child: new Text("aqui va el mapa"),
-
       );
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
