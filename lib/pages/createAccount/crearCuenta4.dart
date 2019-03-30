@@ -1,42 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:beta_balmer/pages/widgets/common_scaffold.dart';
 import 'package:beta_balmer/utils/uidata.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-class ActivityPage extends StatefulWidget {
+class CrearCuenta4 extends StatefulWidget {
   @override
-  _ActivityPageState createState() => _ActivityPageState();
+  _CrearCuenta4State createState() => _CrearCuenta4State();
 }
 
-class _ActivityPageState extends State<ActivityPage> {
-  FixedExtentScrollController fixedExtentScrollController =
-      new FixedExtentScrollController();
-
-  List _act = ["Curso", "Actividad Recreativa", "Entrenamiento"];
-  List<DropdownMenuItem<String>> _dropDownMenuItems;
-  String _currentAct;
-
-  @override
-  void initState() {
-    _dropDownMenuItems = getDropDownMenuItems();
-    _currentAct = _dropDownMenuItems[0].value;
-    super.initState();
-  }
-
-  List<DropdownMenuItem<String>> getDropDownMenuItems() {
-    List<DropdownMenuItem<String>> items = new List();
-    for (String activity in _act) {
-      items.add(new DropdownMenuItem(
-          value: activity,
-          child: new Text(
-            activity,
-            style: TextStyle(
-                fontSize: 20, color: Colors.white),
-          )));
-    }
-    return items;
-  }
-
+class _CrearCuenta4State extends State<CrearCuenta4> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,9 +37,7 @@ class _ActivityPageState extends State<ActivityPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  BackButton(
-                    color: Colors.white,
-                  )
+                
                 ],
               ),
             ],
@@ -78,7 +47,7 @@ class _ActivityPageState extends State<ActivityPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               new Text(
-                "Selecciona el \nTipo de Actividad ",
+                "Confirma y Comienza",
                 style: TextStyle(
                     fontSize: 30,
                     color: Colors.white,
@@ -88,29 +57,28 @@ class _ActivityPageState extends State<ActivityPage> {
               new Container(
                 padding: new EdgeInsets.all(16.0),
               ),
-              new Theme(
-                data:
-                    Theme.of(context).copyWith(canvasColor: Colors.transparent),
-                child: new DropdownButton(
-                  value: _currentAct,
-                  items: _dropDownMenuItems,
-                  onChanged: changedDropDownItem,
-                ),
+              new Text(
+                "Porfavor, confirma tu correo, sigue los pasos indicados \ny comienza ahora",
+                style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.white,
+                    ),
+                textAlign: TextAlign.center,
               ),
+              
               new Container(
                 padding: new EdgeInsets.all(16.0),
               ),
               new CupertinoButton(
                 child: new Text(
-                  "Siguiente",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  "Iniciar Sesion",
+                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
                 ),
                 borderRadius: BorderRadius.circular(5.0),
-                color: Colors.white,
+                color: Colors.transparent,
                 minSize: 20.0,
                 onPressed: (){
-                   print("Selecciona $_currentAct");
-                  Navigator.pushNamed(context, UIData.activityRoute2);
+                  Navigator.pushNamed(context, UIData.loginRoute);
                 },
               ),
 
@@ -122,9 +90,5 @@ class _ActivityPageState extends State<ActivityPage> {
     );
   }
 
-  void changedDropDownItem(String selectedAct) {
-    setState(() {
-      _currentAct = selectedAct;
-    });
-  }
+
 }

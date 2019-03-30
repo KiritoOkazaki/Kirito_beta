@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:beta_balmer/logic/activities_bloc.dart';
 import 'package:beta_balmer/model/activities.dart';
 import 'package:beta_balmer/utils/uidata.dart';
+import 'package:flutter_range_slider/flutter_range_slider.dart';
 
 class Page2Act extends StatefulWidget {
   @override
@@ -14,16 +15,24 @@ class _Page2ActState extends State<Page2Act> {
   TextEditingController _descController2 = new TextEditingController();
   TextEditingController _descController3 = new TextEditingController();
   List _idiomas = ["Español", "Ingles", "Frances", "Aleman", "Japones"];
+  List _sexo = ["Masculino", "Femenino", "Indistino"];
   List<DropdownMenuItem<String>> _dropDownMenuItems;
   String _currentLang;
+   List<DropdownMenuItem<String>> _dropDownMenuItems2;
+  String _currentSexo;
+  bool _value1 = false;
+  double _discreteValue =10.0;
 
   @override
   void initState() {
     _dropDownMenuItems = getDropDownMenuItems();
     _currentLang = _dropDownMenuItems[0].value;
+    _dropDownMenuItems2 =getDropDownMenuItems2();
+    _currentSexo =_dropDownMenuItems2[2].value;
     super.initState();
   }
 
+   void _onChanged1(bool value) => setState(() => _value1 = value);
   List<DropdownMenuItem<String>> getDropDownMenuItems() {
     List<DropdownMenuItem<String>> items = new List();
     for (String idioma in _idiomas) {
@@ -32,7 +41,22 @@ class _Page2ActState extends State<Page2Act> {
           child: new Text(
             idioma,
             style: TextStyle(
-                fontSize: 20, color: Colors.green, fontStyle: FontStyle.italic),
+                fontSize: 20, color: Colors.blue, fontStyle: FontStyle.italic),
+          )));
+    }
+    return items;
+  }
+
+
+  List<DropdownMenuItem<String>> getDropDownMenuItems2() {
+    List<DropdownMenuItem<String>> items = new List();
+    for (String sexo in _sexo) {
+      items.add(new DropdownMenuItem(
+          value: sexo,
+          child: new Text(
+            sexo,
+            style: TextStyle(
+                fontSize: 20, color: Colors.lightBlue, fontStyle: FontStyle.italic),
           )));
     }
     return items;
@@ -65,7 +89,7 @@ class _Page2ActState extends State<Page2Act> {
               labelText: 'Descripción *',
               hintText: "Escribe brevemente de que trata tu actividad"),
           keyboardType: TextInputType.multiline,
-          maxLines: 10,
+          maxLines: 5,
         ),
       );
   Widget description2() => Container(
@@ -80,7 +104,7 @@ class _Page2ActState extends State<Page2Act> {
               labelText: '¿Quien puede participar?',
               hintText: "informa para quien es apto la actividad"),
           keyboardType: TextInputType.multiline,
-          maxLines: 10,
+          maxLines: 5,
         ),
       );
   Widget description3() => Container(
@@ -95,7 +119,7 @@ class _Page2ActState extends State<Page2Act> {
               labelText: '¿Que aprendera el Participante?',
               hintText: "Informa un dato extra sobre la actividad"),
           keyboardType: TextInputType.multiline,
-          maxLines: 10,
+          maxLines: 5,
         ),
       );
 
@@ -116,7 +140,7 @@ class _Page2ActState extends State<Page2Act> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               color: Colors.white,
-              textColor: Colors.green,
+              textColor: Colors.lightBlue,
               onPressed: () {
                 print("EL IDIOMA ES $_currentLang");
                 print("Despliga un modal para agregar idioma");
@@ -128,7 +152,7 @@ class _Page2ActState extends State<Page2Act> {
 
   Widget userprofile() => Container(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             new Text(
               "¿Quien Organiza la Actividad",
@@ -139,7 +163,7 @@ class _Page2ActState extends State<Page2Act> {
               padding: EdgeInsets.all(16.0),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween, 
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
               children: <Widget>[
               CircleAvatar(
                 backgroundImage: NetworkImage("https://cdn.pixabay.com/photo/2016/04/01/09/51/actor-1299629_960_720.png",),
@@ -152,6 +176,63 @@ class _Page2ActState extends State<Page2Act> {
                   )),
             ]),
           ],
+        ),
+      );
+
+      Widget sexo() => Container(
+        padding: const EdgeInsets.all(15.0),
+        decoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(width: 1.0, color: Colors.grey),
+          ),
+        ),
+        child: Column(
+          children: <Widget>[
+            new Text("Sexo", style: new TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),),
+              new DropdownButton(
+              hint: new Text("Selecciona un Sexo"),
+              value: _currentSexo,
+              items: _dropDownMenuItems2,
+              onChanged: changedDropDownItem2,
+            ),
+
+            SizedBox(height: 20.0,),
+            new Text("Edad", style: new TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),),
+           new Slider(
+                  value: _discreteValue,
+                  min: 0.0,
+                  max: 100.0,
+                  divisions: 50,
+                  activeColor: Colors.lightGreen,
+                  inactiveColor: Colors.blue,
+                  label: '${_discreteValue.round()}',
+                  onChanged: (double value) {
+                    setState(() {
+                      _discreteValue = value;
+                      print("value :$_discreteValue");
+                    });
+                  },
+                ),
+                SizedBox(height: 30.0),
+                new Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text("Certificacion Oficial"),
+                Switch(
+                  value: _value1,
+                  onChanged: _onChanged1,
+                  activeColor: Colors.green,
+                ),
+              ],
+            )
+          ],
+          
         ),
       );
 
@@ -174,6 +255,9 @@ class _Page2ActState extends State<Page2Act> {
             ),
             onPressed: () {
               print('Clicked');
+              print("La edad es $_discreteValue");
+              print("el sexo es $_currentSexo");
+              print("certificacion? $_value1");
               Navigator.pushNamed(context, UIData.activityRoute3);
             }),
       );
@@ -184,6 +268,7 @@ class _Page2ActState extends State<Page2Act> {
             shrinkWrap: true,
             padding: EdgeInsets.only(left: 24.0, right: 24.0),
             children: <Widget>[
+              SizedBox(height: 30.0,),
               title(),
               SizedBox(height: 16.0),
               description(),
@@ -201,8 +286,11 @@ class _Page2ActState extends State<Page2Act> {
               description3(),
               SizedBox(height: 16.0),
               userprofile(),
+              SizedBox(height: 16.0),
+              sexo(),
               SizedBox(height: 50.0),
               continueButton(),
+              SizedBox(height: 20.0,)
             ],
           ),
         ),
@@ -214,7 +302,7 @@ class _Page2ActState extends State<Page2Act> {
       appBar: new AppBar(
         title: new Text("Datos Generales",
             style: TextStyle(
-              color: Colors.green,
+              color: Colors.lightBlue,
             )),
         backgroundColor: Colors.white70,
       ),
@@ -225,6 +313,12 @@ class _Page2ActState extends State<Page2Act> {
   void changedDropDownItem(String selectedLang) {
     setState(() {
       _currentLang = selectedLang;
+    });
+  }
+
+  void changedDropDownItem2(String selectedSex) {
+    setState(() {
+      _currentSexo = selectedSex;
     });
   }
 }

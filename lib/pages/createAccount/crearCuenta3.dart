@@ -1,40 +1,41 @@
-import 'package:flutter/material.dart';
+import 'package:beta_balmer/pages/createAccount/crearCuenta4.dart';
+import 'package:beta_balmer/services/postService.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:beta_balmer/pages/widgets/common_scaffold.dart';
-import 'package:beta_balmer/utils/uidata.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_tags/selectable_tags.dart';
 
-class ActivityPage extends StatefulWidget {
+class CrearCuenta3 extends StatefulWidget {
+
+  final int idUser;
+
+  const CrearCuenta3({Key key, this.idUser}): super(key:key);
+
   @override
-  _ActivityPageState createState() => _ActivityPageState();
+  _CrearCuenta3State createState() => _CrearCuenta3State();
 }
 
-class _ActivityPageState extends State<ActivityPage> {
-  FixedExtentScrollController fixedExtentScrollController =
-      new FixedExtentScrollController();
-
-  List _act = ["Curso", "Actividad Recreativa", "Entrenamiento"];
-  List<DropdownMenuItem<String>> _dropDownMenuItems;
-  String _currentAct;
+class _CrearCuenta3State extends State<CrearCuenta3> {
+  final List<String> _list = [
+    "Deportes",
+    "Artes y Cultura",
+    "Experiencias y Espectaculos",
+    "Pasatiempos",
+    "Formacion y Practica"
+  ];
+  List<Tag> _selectableTags = [];
+  List<int> _idSelected = [];
 
   @override
   void initState() {
-    _dropDownMenuItems = getDropDownMenuItems();
-    _currentAct = _dropDownMenuItems[0].value;
-    super.initState();
-  }
-
-  List<DropdownMenuItem<String>> getDropDownMenuItems() {
-    List<DropdownMenuItem<String>> items = new List();
-    for (String activity in _act) {
-      items.add(new DropdownMenuItem(
-          value: activity,
-          child: new Text(
-            activity,
-            style: TextStyle(
-                fontSize: 20, color: Colors.white),
-          )));
-    }
-    return items;
+    int cnt = 1;
+    _list.forEach((item) {
+      _selectableTags.add(Tag(
+        id: cnt,
+        title: item,
+        active: false,
+      ));
+      cnt++;
+    });
   }
 
   @override
@@ -78,7 +79,7 @@ class _ActivityPageState extends State<ActivityPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               new Text(
-                "Selecciona el \nTipo de Actividad ",
+                "¿Cuales son tus intereses? ",
                 style: TextStyle(
                     fontSize: 30,
                     color: Colors.white,
@@ -88,14 +89,18 @@ class _ActivityPageState extends State<ActivityPage> {
               new Container(
                 padding: new EdgeInsets.all(16.0),
               ),
-              new Theme(
-                data:
-                    Theme.of(context).copyWith(canvasColor: Colors.transparent),
-                child: new DropdownButton(
-                  value: _currentAct,
-                  items: _dropDownMenuItems,
-                  onChanged: changedDropDownItem,
-                ),
+              SelectableTags(
+                tags: _selectableTags,
+                backgroundContainer: Colors.transparent,
+                color: Colors.transparent,
+                activeColor: Colors.green,
+                textColor: Colors.white,
+                textActiveColor: Colors.black,
+                columns: 2, // default 4
+                symmetry: true, // default false
+                onPressed: (tag) {
+                  print(tag);
+                },
               ),
               new Container(
                 padding: new EdgeInsets.all(16.0),
@@ -108,13 +113,12 @@ class _ActivityPageState extends State<ActivityPage> {
                 borderRadius: BorderRadius.circular(5.0),
                 color: Colors.white,
                 minSize: 20.0,
-                onPressed: (){
-                   print("Selecciona $_currentAct");
-                  Navigator.pushNamed(context, UIData.activityRoute2);
+                onPressed: () {
+                  interesesSeleccionados();
+                  
+                  //Navigator.pushNamed(context, UIData.activityRoute2);
                 },
               ),
-
-              
             ],
           ),
         ],
@@ -122,9 +126,21 @@ class _ActivityPageState extends State<ActivityPage> {
     );
   }
 
-  void changedDropDownItem(String selectedAct) {
-    setState(() {
-      _currentAct = selectedAct;
+  void interesesSeleccionados() {
+    if (_selectableTags.length > 0) {
+      _selectableTags.forEach((item) {
+        if (item.active) {
+          print(item.id);
+          postCreateUserInteres(widget.idUser, item.id);
+          //_idSelected.add(item.id);
+        }
+      });
+    }
+  }
+
+  void postCreateUserInteres(idUsuario, idInteres) async {
+    await requestCreateInteres(context, idUsuario, idInteres).then((s) {
+     
     });
   }
 }

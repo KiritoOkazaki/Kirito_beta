@@ -24,7 +24,8 @@ class _Pag4ActState extends State<Pag4Act> {
             end: Alignment.topRight,
           ),
         ),
-        child: new FlatButton(
+        child: new CupertinoButton(
+          borderRadius: BorderRadius.circular(10.0),
             child: new Text(
               'Continuar',
               style:
@@ -68,6 +69,12 @@ class _Pag4ActState extends State<Pag4Act> {
                   });
                 },
               ),
+               Positioned(
+              bottom: 70,
+              right: 10,
+              child: Text("Hrs", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+
+            ),
           ],
         )
       );
@@ -101,6 +108,12 @@ class _Pag4ActState extends State<Pag4Act> {
                   });
                 },
               ),
+               Positioned(
+              bottom: 70,
+              right: 10,
+              child: Text("Hrs", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+
+            ),
           ],
         ),
       );
@@ -116,7 +129,7 @@ class _Pag4ActState extends State<Pag4Act> {
                 "Agrega un horario a tu actividad",
                 style: TextStyle(
                     color: Colors.black,
-                    fontSize: 30,
+                    fontSize: 25,
                     fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
@@ -144,7 +157,7 @@ class _Pag4ActState extends State<Pag4Act> {
       appBar: new AppBar(
         title: new Text("Horario",
             style: TextStyle(
-              color: Colors.green,
+              color: Colors.lightBlue,
             )),
         backgroundColor: Colors.white70,
       ),

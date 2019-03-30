@@ -14,23 +14,28 @@ class UIData {
   static const String activityRoute5 = "/activityPage5";
   static const String activityRoute6 = "/activityPage6";
   static const String activityRoute7 = "/activityPage7";
-
+  static const String createAccount = "/crearCuenta";
+  static const String recoverPass = "/recuperarContraseña";
   static const String activity1 ="/activity1";
   //strings
   static const String appName = "Balmer App";
 
   //fonts
   static const String quickFont = "Quicksand";
-  static const String ralewayFont = "Raleway";
+  /*static const String ralewayFont = "Raleway";
   static const String quickBoldFont = "Quicksand_Bold.otf";
   static const String quickNormalFont = "Quicksand_Book.otf";
-  static const String quickLightFont = "Quicksand_Light.otf";
+  static const String quickLightFont = "Quicksand_Light.otf";*/
 
   //images
   static const String imageDir = "assets/images";
   static const String balmerLogo = "$imageDir/LOGO-06.png";
   static const String balmerLogo2 = "$imageDir/LOGO-04.png";
   static const String balmerLogoInit = "$imageDir/LOGO-01.png";
+  static const String homeSVG = "$imageDir/Home.svg";
+  static const String nuevoBalmerLogoBlanco = "$imageDir/LOGOBLANCO.png"; 
+  static const String nuevoBalmerColor = "$imageDir/LOGOCOLOR.png"; 
+  static const String nuevoBalmerLogoNegativi = "$imageDir/LOGONEGATIVO.png"; 
 
   //login
   static const String enter_code_label = "Phone Number";

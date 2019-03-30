@@ -1,4 +1,5 @@
 import 'package:beta_balmer/utils/uidata.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_verification_code_input/flutter_verification_code_input.dart';
 
@@ -9,14 +10,10 @@ class Page3Act extends StatefulWidget {
 
 class _Page3ActState extends State<Page3Act> {
   Widget continueButton() => Container(
-        decoration: new BoxDecoration(
-          gradient: LinearGradient(
-            colors: [const Color(0xFF00827D), Colors.yellow],
-            begin: Alignment.bottomLeft,
-            end: Alignment.topRight,
-          ),
-        ),
-        child: new FlatButton(
+        child: new CupertinoButton(
+            borderRadius: BorderRadius.circular(5.0),
+            minSize: 30.0,
+            color: Colors.lightBlue,
             child: new Text(
               'Continuar',
               style:
@@ -35,10 +32,10 @@ class _Page3ActState extends State<Page3Act> {
             padding: EdgeInsets.only(left: 24.0, right: 24.0),
             children: <Widget>[
               Text(
-                "Indica el número máximo de participantes ",
+                "Indica el número\n máximo de participantes ",
                 style: TextStyle(
                     color: Colors.black,
-                    fontSize: 30,
+                    fontSize: 25,
                     fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
@@ -60,7 +57,7 @@ class _Page3ActState extends State<Page3Act> {
                   ),
                 ),
               ),
-              SizedBox(height: 80.0),
+              SizedBox(height: 100.0),
               continueButton(),
               SizedBox(height: 16.0),
             ],
@@ -74,7 +71,7 @@ class _Page3ActState extends State<Page3Act> {
       appBar: new AppBar(
         title: new Text("Número de participantes",
             style: TextStyle(
-              color: Colors.green,
+              color: Colors.lightBlue,
             )),
         backgroundColor: Colors.white70,
       ),
