@@ -1,9 +1,15 @@
 import 'package:beta_balmer/pages/createAccount/crearCuenta4.dart';
+import 'package:beta_balmer/services/postService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tags/selectable_tags.dart';
 
 class CrearCuenta3 extends StatefulWidget {
+
+  final int idUser;
+
+  const CrearCuenta3({Key key, this.idUser}): super(key:key);
+
   @override
   _CrearCuenta3State createState() => _CrearCuenta3State();
 }
@@ -17,7 +23,7 @@ class _CrearCuenta3State extends State<CrearCuenta3> {
     "Formacion y Practica"
   ];
   List<Tag> _selectableTags = [];
-  List<int> _idSelected =[];
+  List<int> _idSelected = [];
 
   @override
   void initState() {
@@ -83,7 +89,7 @@ class _CrearCuenta3State extends State<CrearCuenta3> {
               new Container(
                 padding: new EdgeInsets.all(16.0),
               ),
-             SelectableTags(
+              SelectableTags(
                 tags: _selectableTags,
                 backgroundContainer: Colors.transparent,
                 color: Colors.transparent,
@@ -96,8 +102,6 @@ class _CrearCuenta3State extends State<CrearCuenta3> {
                   print(tag);
                 },
               ),
-              
-              
               new Container(
                 padding: new EdgeInsets.all(16.0),
               ),
@@ -111,10 +115,7 @@ class _CrearCuenta3State extends State<CrearCuenta3> {
                 minSize: 20.0,
                 onPressed: () {
                   interesesSeleccionados();
-                  print("actividades seleccionadas $_idSelected");
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => CrearCuenta4(),
-                  ));
+                  
                   //Navigator.pushNamed(context, UIData.activityRoute2);
                 },
               ),
@@ -125,15 +126,21 @@ class _CrearCuenta3State extends State<CrearCuenta3> {
     );
   }
 
-  void interesesSeleccionados(){
-    _selectableTags.forEach((item){
-      if(item.active){
-        print(item.id);
-        _idSelected.add(item.id);
-      }
-
-    });
-  
+  void interesesSeleccionados() {
+    if (_selectableTags.length > 0) {
+      _selectableTags.forEach((item) {
+        if (item.active) {
+          print(item.id);
+          postCreateUserInteres(widget.idUser, item.id);
+          //_idSelected.add(item.id);
+        }
+      });
+    }
   }
 
+  void postCreateUserInteres(idUsuario, idInteres) async {
+    await requestCreateInteres(context, idUsuario, idInteres).then((s) {
+     
+    });
+  }
 }

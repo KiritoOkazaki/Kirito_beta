@@ -9,9 +9,10 @@ class CrearCuenta1 extends StatefulWidget {
 }
 
 class _CrearCuenta1State extends State<CrearCuenta1> {
-  TextEditingController _emailController = new TextEditingController();
-  TextEditingController _passwordController = new TextEditingController();
-  TextEditingController _password1Controller = new TextEditingController();
+  TextEditingController _controller = new TextEditingController();
+  GlobalKey<FormState> _key = new GlobalKey();
+  bool _validate = false;
+  String email, password1, password;
   bool _value = false;
 
   void _valueChange(bool value) => setState(() => _value = value);
@@ -58,37 +59,10 @@ class _CrearCuenta1State extends State<CrearCuenta1> {
                 new Container(
                   padding: new EdgeInsets.all(16.0),
                 ),
-                new TextFormField(
-                  controller: _emailController,
-                  maxLines: 1,
-                  decoration: InputDecoration(
-                    hintText: "Ingresa un correo",
-                    labelText: "Correo",
-                  ),
-                ),
-                new Container(
-                  padding: new EdgeInsets.all(16.0),
-                ),
-                TextFormField(
-                  controller: _passwordController,
-                  maxLines: 1,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    hintText: "Maximo 8 caracteres",
-                    labelText: "Contraseña",
-                  ),
-                ),
-                new Container(
-                  padding: new EdgeInsets.all(16.0),
-                ),
-                TextFormField(
-                  controller: _password1Controller,
-                  maxLines: 1,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    hintText: "Maximo 8 caracteres",
-                    labelText: "Repite tu contraseña",
-                  ),
+                new Form(
+                  key: _key,
+                  autovalidate: _validate,
+                  child: FormUI(),
                 ),
                 new Container(
                   padding: new EdgeInsets.all(16.0),
@@ -102,55 +76,15 @@ class _CrearCuenta1State extends State<CrearCuenta1> {
                       activeColor: Colors.green,
                     ),
                     new CupertinoButton(
-                      child: new Text(
-                        "Crear Cuenta",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.white),
-                      ),
-                      borderRadius: BorderRadius.circular(5.0),
-                      color: Colors.green,
-                      minSize: 20.0,
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            // return object of type Dialog
-                            return AlertDialog(
-                              title: new Text("Terminos y condiciones de uso"),
-                              content: new Text(
-                                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."),
-                              actions: <Widget>[
-                                // usually buttons at the bottom of the dialog
-                                new FlatButton(
-                                  color: Colors.green,
-                                  textColor: Colors.white,
-                                  child: new Text("Aceptar"),
-                                  onPressed: () {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (context) => CrearCuenta2(correo:_emailController.text, password:_passwordController.text)
-                                    ));
-                                    //Navigator.pop(context);
-                                  },
-                                ),
-                                new FlatButton(
-                                  color: Colors.red,
-                                  textColor: Colors.white,
-                                  child: new Text("Rechazar Terminos"),
-                                  onPressed: () {
-                                    Navigator.of(context)
-                                        .pushNamedAndRemoveUntil(
-                                            UIData.loginRoute,
-                                            (Route<dynamic> route) => false);
-                                    //Navigator.pop(context);
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      },
-                    ),
+                        child: new Text(
+                          "Crear Cuenta",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.white),
+                        ),
+                        borderRadius: BorderRadius.circular(5.0),
+                        color: Colors.green,
+                        minSize: 20.0,
+                        onPressed: _sendToServer),
                   ],
                 ),
                 new SizedBox(
@@ -175,5 +109,124 @@ class _CrearCuenta1State extends State<CrearCuenta1> {
         ],
       ),
     );
+  }
+
+  Widget FormUI() => Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          new TextFormField(
+            //controller: _emailController,
+            keyboardType: TextInputType.emailAddress,
+            maxLines: 1,
+            decoration: InputDecoration(
+              hintText: "Ingresa un correo",
+              labelText: "Correo",
+            ),
+            validator: validateEmail,
+            onSaved: (String val) {
+              email = val;
+            },
+          ),
+          new Container(
+            padding: new EdgeInsets.all(16.0),
+          ),
+          TextFormField(
+            controller: _controller,
+            keyboardType: TextInputType.text,
+            maxLines: 1,
+            obscureText: true,
+            decoration: InputDecoration(
+              hintText: "Minimo 8 caracteres",
+              labelText: "Contraseña",
+            ),
+            validator: (String arg) {
+              if (arg.length < 9)
+                return 'La contraseña debe ser de almenos 8 caracteres';
+              else
+                return null;
+            },
+            onSaved: (String val) {
+              password = val;
+            },
+          ),
+          new Container(
+            padding: new EdgeInsets.all(16.0),
+          ),
+          TextFormField(
+            //controller: _password1Controller,
+            keyboardType: TextInputType.text,
+            maxLines: 1,
+            obscureText: true,
+            decoration: InputDecoration(
+              hintText: "Maximo 8 caracteres",
+              labelText: "Repite tu contraseña",
+            ),
+            validator: (confirmation) {
+              if (confirmation !=_controller.text)
+                return 'La contraseña debe ser la misma';
+               
+            },
+          
+          ),
+        ],
+      );
+
+  String validateEmail(String value) {
+    String pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regExp = new RegExp(pattern);
+    if (value.length == 0) {
+      return "el Correo es requerido";
+    } else if (!regExp.hasMatch(value)) {
+      return "Correo invalido";
+    } else {
+      return null;
+    }
+  }
+
+  _sendToServer() {
+    if (_key.currentState.validate()) {
+      // No any error in validation
+      _key.currentState.save();
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          // return object of type Dialog
+          return AlertDialog(
+            title: new Text("Terminos y condiciones de uso"),
+            content: new Text(
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."),
+            actions: <Widget>[
+              // usually buttons at the bottom of the dialog
+              new FlatButton(
+                  color: Colors.green,
+                  textColor: Colors.white,
+                  child: new Text("Aceptar"),
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>
+                            CrearCuenta2(correo: email, password: password)));
+                  }),
+              new FlatButton(
+                color: Colors.red,
+                textColor: Colors.white,
+                child: new Text("Rechazar Terminos"),
+                onPressed: () {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      UIData.loginRoute, (Route<dynamic> route) => false);
+                  //Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      // validation error
+      setState(() {
+        _validate = true;
+      });
+    }
   }
 }

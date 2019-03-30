@@ -34,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Image.asset(
-            "assets/images/LOGO-06.png",
+            UIData.nuevoBalmerColor,
             height: 200,
             width: 200,
             //fit: BoxFit.cover,
@@ -89,28 +89,9 @@ class _LoginPageState extends State<LoginPage> {
               height: 15.0,
             ),
             GestureDetector(
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    // return object of type Dialog
-                    return AlertDialog(
-                      title: new Text("Olvide mi contraseña"),
-                      content: new Text(
-                          "Ingresa tu correo y te enviaremos instrucciones"),
-                      actions: <Widget>[
-                        // usually buttons at the bottom of the dialog
-                        new FlatButton(
-                          child: new Text("Cerrar"),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
+              onTap: (){
+                Navigator.of(context).pushNamed(UIData.recoverPass);
+              }, 
               child: Text(
                 "Olvide mi contraseña",
                 textAlign: TextAlign.end,
@@ -143,7 +124,6 @@ class _LoginPageState extends State<LoginPage> {
             ),
             GestureDetector(
               onTap: () {
-                print("Nueva pantalla");
                 Navigator.of(context).pushNamed(UIData.createAccount);
              
               },

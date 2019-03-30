@@ -10,6 +10,7 @@ import 'package:beta_balmer/pages/createActivity/page5.dart';
 import 'package:beta_balmer/pages/createActivity/page6.dart';
 import 'package:beta_balmer/pages/createActivity/page7.dart';
 import 'package:beta_balmer/pages/createAccount/crearCuenta1.dart';
+import 'package:beta_balmer/pages/recoverPassword/passwordPage1.dart';
 import 'package:beta_balmer/utils/uidata.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
         UIData.activityRoute6: (BuildContext context) => Page6Act(),
         UIData.activityRoute7: (BuildContext context) => Page7Act(),
         UIData.createAccount: (BuildContext context) => CrearCuenta1(),
+        UIData.recoverPass: (BuildContext context) => RecoverPassword1(),
         
 
       

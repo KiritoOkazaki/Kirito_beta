@@ -118,11 +118,6 @@ class _CrearCuenta2State extends State<CrearCuenta2> {
                 onPressed: (){
                    print("Seleccionaste $_currentAct");
                    postCreateUser(widget.correo, widget.password,_currentAct);
-                   ///AQUI MANDAS A LLAMAR AL SERVICIO
-                   Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (context) => CrearCuenta3(),
-                                    ));
                   //Navigator.pushNamed(context, UIData.activityRoute2);
                 },
               ),

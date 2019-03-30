@@ -8,7 +8,7 @@ class SplashBalmerScreen extends StatelessWidget{
     return new SplashScreen(
       seconds: 2,
       navigateAfterSeconds: LoginPage(),
-      image: Image.asset(UIData.balmerLogoInit, height: 200,width: 200, alignment: Alignment.center,),
+      image: Image.asset(UIData.nuevoBalmerLogoNegativi, height: 200,width: 200, alignment: Alignment.center,),
       photoSize: 100.0,
       gradientBackground: LinearGradient(
         colors: [const Color(0xFF00827D), const Color(0xFF46A040),const Color(0xFF2E7DE1), const Color(0xFF94348C)],
