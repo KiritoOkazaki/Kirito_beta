@@ -1,7 +1,9 @@
+import 'package:beta_balmer/pages/createActivity/page2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:beta_balmer/pages/widgets/common_scaffold.dart';
 import 'package:beta_balmer/utils/uidata.dart';
+import 'package:beta_balmer/model/actividad.dart';
 
 class ActivityPage extends StatefulWidget {
   @override
@@ -12,9 +14,12 @@ class _ActivityPageState extends State<ActivityPage> {
   FixedExtentScrollController fixedExtentScrollController =
       new FixedExtentScrollController();
 
-  List _act = ["Curso", "Actividad Recreativa", "Entrenamiento"];
+  List _act = ["Entrenamiento", "Curso", "Evento", "Actividade Recreativa", "Taller"];
+  Actividad actividad = new Actividad();
   List<DropdownMenuItem<String>> _dropDownMenuItems;
   String _currentAct;
+  int idInteres;
+
 
   @override
   void initState() {
@@ -109,12 +114,15 @@ class _ActivityPageState extends State<ActivityPage> {
                 color: Colors.white,
                 minSize: 20.0,
                 onPressed: (){
-                   print("Selecciona $_currentAct");
-                  Navigator.pushNamed(context, UIData.activityRoute2);
+                   print("Selecciona $idInteres");
+                   actividad.setInteres=idInteres;
+                  //Navigator.pushNamed(context, UIData.activityRoute2);
+
+                  Navigator.of(context).push(MaterialPageRoute(
+       builder: (context) => Page2Act(actividad: actividad,)));
+                  
                 },
               ),
-
-              
             ],
           ),
         ],
@@ -124,7 +132,29 @@ class _ActivityPageState extends State<ActivityPage> {
 
   void changedDropDownItem(String selectedAct) {
     setState(() {
+      switch (selectedAct) {
+          case "Entrenamiento":
+          idInteres=1;
+          break;
+          case "Curso":
+          idInteres=2;
+          break;
+          case "Evento":
+          idInteres=3;
+          break;
+          case "Actividad Recreativa":
+          idInteres=4;
+          break;
+          case "Taller":
+          idInteres=5;
+          break;
+        default:
+      }
+
+
+
       _currentAct = selectedAct;
     });
   }
+
 }

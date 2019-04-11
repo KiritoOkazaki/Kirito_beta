@@ -1,7 +1,11 @@
+import 'package:beta_balmer/model/actividad.dart';
 import 'package:beta_balmer/pages/createActivity/Page8.dart';
 import 'package:flutter/material.dart';
 
 class Page7Act extends StatefulWidget {
+  final Actividad actividad;
+
+  const Page7Act({Key key, this.actividad}) : super(key: key);
   @override
   _Page7ActState createState() => _Page7ActState();
 }
@@ -9,12 +13,15 @@ class Page7Act extends StatefulWidget {
 class _Page7ActState extends State<Page7Act>
     with SingleTickerProviderStateMixin {
   int _radioValue = 0;
+  bool condCancel=false;
   TabController _controller;
   TextEditingController _priceController = new TextEditingController();
   bool _value1 = false;
+  Actividad _actividad;
 
   @override
   void initState() {
+    _actividad=widget.actividad;
     super.initState();
     _controller = new TabController(
       length: 2,
@@ -133,6 +140,8 @@ class _Page7ActState extends State<Page7Act>
                   TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
             onPressed: () {
+              _actividad.setPrice=_priceController.text as double;
+              _actividad.setCancelacion=condCancel;
                Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context)=> Page8Act(),
@@ -193,10 +202,12 @@ class _Page7ActState extends State<Page7Act>
 
       switch (_radioValue) {
         case 0:
+          condCancel=false;
           print("Condicion 1");
 
           break;
         case 1:
+        condCancel=true;
           print("Condicion 2");
           break;
 

@@ -112,10 +112,10 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 color: Colors.lightBlue,
                 onPressed: () {
-                  //postLogin(_emailController.text, _passwordController.text);
-                  //if(barIndicator==true)
-                  // _onLoading();
-                  Navigator.pushNamed(context, "/homePage");
+                  postLogin(_emailController.text, _passwordController.text);
+                  if(barIndicator==true)
+                   _onLoading();
+                  //Navigator.pushNamed(context, "/homePage");
                 }, //API Y ROUTE AL HOME PAGE
               ),
             ),
@@ -137,6 +137,8 @@ class _LoginPageState extends State<LoginPage> {
       );
 
   void postLogin(email, password) async {
+    print(email);
+    print(password);
     await requestLoginAPI(context, email, password).then((s) {
       return barIndicator = s;
     });

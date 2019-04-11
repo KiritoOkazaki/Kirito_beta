@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:beta_balmer/model/actividad.dart';
 import 'package:beta_balmer/pages/createAccount/crearCuenta3.dart';
 import 'package:beta_balmer/pages/createAccount/crearCuenta4.dart';
 import 'package:beta_balmer/restFunctions/api_service.dart';
@@ -17,8 +18,15 @@ requestLoginAPI(BuildContext context, String correo, String password) async {
   }).then((dynamic res) {
     print(res.toString());
     if (res["type"]== 1){
-      LocalData.setUser(res["id"], res["correo"],res["access_token"], res["nombre"]);
-      Navigator.pushNamed(context, UIData.homeRoute);    
+      LocalData.setUser(res["id"], res["correo"],res["access_token"], res["nombre"], res["foto"], res["activo"]);
+      int activo = res["activo"] as int;
+      if (activo==0) {
+        Navigator.pushNamed(context, UIData.firstLogin);
+        
+      }
+      else{
+      Navigator.pushNamed(context, UIData.homeRoute);
+      }    
     return true;
 
    // return LoginModel.fromJson(responseJson);
@@ -31,7 +39,7 @@ requestLoginAPI(BuildContext context, String correo, String password) async {
   );
 }
 
-requestCreateUser(BuildContext context, String email, String password, String ciudad){
+requestCreateUser(BuildContext context, String email, String password, String ciudad) async{
   final url = "http://localhost:5000/CreateUser";
   int idLocalidad=0;
   switch (ciudad) {
@@ -96,4 +104,41 @@ requestCreateInteres(BuildContext context, int idUsuario, int idInteres) async {
   }
 
   );
+}
+
+requestCreateActivity(BuildContext context, Actividad actividad) async{
+   final url = "http://localhost:5000/CreateActivity";
+
+   post(context, url, body: {
+     "titulo" : actividad.titulo,
+     "descripcion" : actividad.descripcion,
+     "direccion" : actividad.descripcion,
+     "sexo" : actividad.sexo,
+     "descripcion2" : actividad.description2,
+     "descripcion3" : actividad.description3,
+     "certOficial" : actividad.certOfic,
+     "edadMin" : actividad.edadMin,
+     "edadMax" : actividad.edadMax,
+     "precio" : actividad.price,
+     "numParticipantes" : actividad.numParticipantes,
+     "horaStatr" : actividad.horaStar,
+     "horaEnd" : actividad.horaEnd,
+     "tipoEspacio" : actividad.tipoEspacion,
+     "condicionCancelacion" : actividad.cancelacion,
+     "sesiones" : actividad.numSesion,
+     "fotoPrincipal" : actividad.foto,
+     "longitud":actividad.longitude,
+     "latitude":actividad.latitude,
+     "Idiomas_idIdiomas" : actividad.idIdiomas,
+     "idUsuarios" : actividad.idUser,
+     "idInteres" : actividad.idInteres,
+     "idLocalidad": actividad.idLocalidades
+
+
+
+   }).then((dynamic res){
+     print(res);
+     return true;
+   });
+
 }

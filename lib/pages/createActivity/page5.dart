@@ -1,7 +1,11 @@
+import 'package:beta_balmer/model/actividad.dart';
 import 'package:flutter/material.dart';
 import 'package:beta_balmer/pages/createActivity/calendarSelect.dart';
 
 class Page5Act extends StatefulWidget {
+  final Actividad actividad;
+
+  const Page5Act({Key key, this.actividad}) : super(key: key);
   @override
   _Page5ActState createState() => _Page5ActState();
 }
@@ -62,7 +66,7 @@ with SingleTickerProviderStateMixin{
       body: TabBarView(
         controller: _controller,
         children: <Widget>[
-          CalendarSelect(),
+          CalendarSelect(actividad: widget.actividad,),
         ],
       ),
     );

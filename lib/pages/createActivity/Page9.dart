@@ -1,12 +1,37 @@
+import 'package:beta_balmer/model/actividad.dart';
 import 'package:beta_balmer/pages/createActivity/Page10.dart';
 import 'package:flutter/material.dart';
+import 'package:beta_balmer/model/user.dart';
+import 'package:beta_balmer/utils/localData.dart';
 
 class Page9Act extends StatefulWidget {
+  final Actividad actividad;
+
+  const Page9Act({Key key, this.actividad}) : super(key: key);
   @override
   _Page9ActState createState() => _Page9ActState();
 }
 
 class _Page9ActState extends State<Page9Act> {
+Actividad _actividad;
+
+String userName;
+String userPic;
+
+
+void initState(){
+  _actividad=widget.actividad;
+  super.initState();
+}
+
+void user() async {
+    User usr = await LocalData.getUser();
+    userName = usr.nombre;
+    userPic = usr.foto;
+  }
+
+
+
   Widget description1() => Container(
         padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
@@ -23,7 +48,8 @@ class _Page9ActState extends State<Page9Act> {
                     fontSize: 15.0,
                     color: Colors.black,
                     fontWeight: FontWeight.bold)),
-            new Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum")
+              new Text(_actividad.description2),      
+           // new Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum")
           ],
         ),
       );
@@ -62,6 +88,7 @@ class _Page9ActState extends State<Page9Act> {
         children: <Widget>[
           Image.network(
             "https://i.pinimg.com/originals/b9/17/aa/b917aaffae32fc178d8590467df960b0.jpg",
+            //_actividad.foto,
             fit: BoxFit.cover,
           ),
           Positioned(
@@ -71,14 +98,16 @@ class _Page9ActState extends State<Page9Act> {
                 fit: BoxFit.cover,
                 child: Text.rich(
                   TextSpan(
-                    text: "Taller",
+                    text: _actividad.titulo,
+                    //text: "Taller",
                     style: TextStyle(
                         fontStyle: FontStyle.italic,
                         fontSize: 12,
                         color: Colors.white.withOpacity(0.9)),
                     children: <TextSpan>[
                       TextSpan(
-                          text: "iluminacion arquitectonica y ambiental",
+                          text: _actividad.descripcion,
+                         // text: "iluminacion arquitectonica y ambiental",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
@@ -106,8 +135,9 @@ class _Page9ActState extends State<Page9Act> {
                     children: <Widget>[
                       CircleAvatar(
                         backgroundImage: NetworkImage( "https://avatars0.githubusercontent.com/u/12619420?s=460&v=4")
+                        //backgroundImage: NetworkImage("$userPic")
                       ),
-                      Text("Maestro Flutter",
+                      Text("$userName",
                           textAlign: TextAlign.start,
                           style: TextStyle(
                             color: Colors.black,
@@ -117,13 +147,13 @@ class _Page9ActState extends State<Page9Act> {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    Text("\$ 3,500 MXN",
+                    Text("\$ ${_actividad.price}",
                         textAlign: TextAlign.right,
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 16.0,
                         )),
-                    Text('Sesiones: 10',
+                    Text("${_actividad.numSesion} Sesiones",
                         textAlign: TextAlign.right,
                         style: TextStyle(
                           color: Colors.black,

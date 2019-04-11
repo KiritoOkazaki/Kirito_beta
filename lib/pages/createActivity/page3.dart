@@ -1,14 +1,29 @@
+import 'package:beta_balmer/pages/createActivity/page4.dart';
 import 'package:beta_balmer/utils/uidata.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_verification_code_input/flutter_verification_code_input.dart';
+import 'package:beta_balmer/model/actividad.dart';
 
 class Page3Act extends StatefulWidget {
+
+  final Actividad actividad;
+
+  const Page3Act({Key key, this.actividad}) : super(key: key);
   @override
   _Page3ActState createState() => _Page3ActState();
 }
 
 class _Page3ActState extends State<Page3Act> {
+  Actividad _actividad;
+  int numPart;
+
+  @override
+  void initState() {
+    _actividad = widget.actividad;
+    super.initState();
+  }
+
   Widget continueButton() => Container(
         child: new CupertinoButton(
             borderRadius: BorderRadius.circular(5.0),
@@ -21,7 +36,10 @@ class _Page3ActState extends State<Page3Act> {
             ),
             onPressed: () {
               print('Clicked');
-              Navigator.pushNamed(context, UIData.activityRoute4);
+              _actividad.setParticipantes=numPart;
+               Navigator.of(context).push(MaterialPageRoute(
+       builder: (context) => Pag4Act(actividad: _actividad,)));
+              //Navigator.pushNamed(context, UIData.activityRoute4);
             }),
       );
 
@@ -52,7 +70,8 @@ class _Page3ActState extends State<Page3Act> {
                     length: 2,
                     keyboardType: TextInputType.number,
                     onCompleted: (String value) {
-                      print(value);
+                      numPart = value as int;
+                      print("El valor es $value");
                     },
                   ),
                 ),

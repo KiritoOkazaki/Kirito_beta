@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:beta_balmer/model/actividad.dart';
+import 'package:beta_balmer/pages/createActivity/page7.dart';
 import 'package:beta_balmer/utils/uidata.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,12 +8,16 @@ import 'package:location/location.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Page6Act extends StatefulWidget {
+  final Actividad actividad;
+
+  const Page6Act({Key key, this.actividad}) : super(key: key);
   @override
   _Page6ActState createState() => _Page6ActState();
 }
 
 class _Page6ActState extends State<Page6Act> {
   int _radioValue = 0;
+  bool _tipoEspacio=false;
   List _cities = ["Guadalajara", "Morelia", "Ciudad de Mexico", "Monterrey"];
   List<DropdownMenuItem<String>> _dropDownMenuItems;
   String _currentCity;
@@ -20,11 +26,12 @@ class _Page6ActState extends State<Page6Act> {
   LocationData _currentLocation;
   LocationData _startLocation;
   Location _location = new Location();
+  Actividad _actividad;
   GoogleMapController mapController;
   MapType _currentMapType =MapType.normal;
   double latitude;
   double longitude;
-
+  int idLocalidad;
   final LatLng _center =const LatLng(19.7046682, -101.1153807);
 
 
@@ -54,6 +61,7 @@ _getLocation() async {
   void initState() {
     _dropDownMenuItems = getDropDownMenuItems();
     _currentCity = _dropDownMenuItems[0].value;
+    _actividad = widget.actividad;
     _getLocation();
     super.initState();
   }
@@ -124,7 +132,12 @@ _getLocation() async {
                   TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
             onPressed: () {
-          Navigator.pushNamed(context, UIData.activityRoute7);
+              _actividad.setEspacio =_tipoEspacio;
+              _actividad.setDireccion = _currentCity+ " "+_directController.text+" "+_directController2.text;
+              _actividad.setLatitude=latitude;
+              _actividad.setLongitude=longitude;
+          Navigator.of(context).push(MaterialPageRoute(
+       builder: (context) => Page7Act(actividad: _actividad,)));
             }),
       );
 
@@ -218,10 +231,11 @@ _getLocation() async {
       switch (_radioValue) {
         case 0:
           print("Publico");
-
+          _tipoEspacio=false;
           break;
         case 1:
           print("Privado");
+          _tipoEspacio=true;
           break;
 
         default:
@@ -230,7 +244,30 @@ _getLocation() async {
   }
   void changedDropDownItem(String selectedAct) {
     setState(() {
-      _currentCity = selectedAct;
+      _currentCity=selectedAct;
+     switch (selectedAct) {
+          case "Guadalajara":
+          idLocalidad=575;
+          latitude=20.6763889;
+          longitude=-103.3422222;
+          break;
+          case "Morelia":
+          idLocalidad=839;
+          latitude=19.7033839;
+          longitude=-101.1920464;
+          break;
+          case "Ciudad de Mexico":
+          idLocalidad=285;
+          latitude=19.4072689;
+          longitude=-99.1907544;
+          break;
+          case "Monterrey":
+          idLocalidad=991;
+          latitude= 25.6646972;
+          longitude=-100.3108917;
+          break;
+        default:
+      }
     });
   }
 }

@@ -1,11 +1,17 @@
+import 'package:beta_balmer/pages/createActivity/page6.dart';
 import 'package:beta_balmer/utils/uidata.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/classes/event_list.dart';
+import 'package:beta_balmer/model/actividad.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:intl/intl.dart';
 
 class CalendarSelect extends StatefulWidget {
+  final Actividad actividad;
+
+  const CalendarSelect({Key key, this.actividad}) : super(key: key);
+
   @override
   _CalendarSelectState createState() => _CalendarSelectState();
 }
@@ -16,11 +22,19 @@ class _CalendarSelectState extends State<CalendarSelect> {
   String _currentMonth = '';
   int cont = 0;
   var datesGrowable = new List<DateTime>();
+  Actividad _actividad;
+
 
   CalendarCarousel _calendarCarousel, _calendarCarouselNoHeader;
 
-  @override
-  void initState() {}
+   @override
+  void initState() {
+    _actividad = widget.actividad;
+    print("Calendario ${_actividad.horaStar}");
+    print("Calendario ${_actividad.horaEnd}");
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +103,10 @@ class _CalendarSelectState extends State<CalendarSelect> {
                       ),
                       onPressed: () {
                         print('NUMERO DE SESIONES: ${datesGrowable.length}');
-                        Navigator.pushNamed(context, UIData.activityRoute6);
+                        _actividad.setSesion=datesGrowable.length;
+                         Navigator.of(context).push(MaterialPageRoute(
+       builder: (context) => Page6Act(actividad: _actividad,)));
+                        //Navigator.pushNamed(context, UIData.activityRoute6);
                       }),
                 ),
               ],

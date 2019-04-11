@@ -17,6 +17,7 @@ class UIData {
   static const String createAccount = "/crearCuenta";
   static const String recoverPass = "/recuperarContraseña";
   static const String activity1 ="/activity1";
+  static const String firstLogin ="/firstLogin";
   //strings
   static const String appName = "Balmer App";
 
@@ -35,7 +36,9 @@ class UIData {
   static const String homeSVG = "$imageDir/Home.svg";
   static const String nuevoBalmerLogoBlanco = "$imageDir/LOGOBLANCO.png"; 
   static const String nuevoBalmerColor = "$imageDir/LOGOCOLOR.png"; 
-  static const String nuevoBalmerLogoNegativi = "$imageDir/LOGONEGATIVO.png"; 
+  static const String nuevoBalmerLogoNegativi = "$imageDir/LOGONEGATIVO.png";
+  static const String agregarFoto = "$imageDir/agregarFoto.png"; 
+
 
   //login
   static const String enter_code_label = "Phone Number";

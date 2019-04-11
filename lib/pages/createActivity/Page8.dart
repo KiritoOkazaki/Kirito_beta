@@ -1,10 +1,18 @@
 import 'dart:io';
+import 'package:beta_balmer/model/actividad.dart';
 import 'package:beta_balmer/pages/createActivity/Page9.dart';
+import 'package:beta_balmer/services/postService.dart';
+import 'package:beta_balmer/utils/showDialogSingleButton.dart';
+import 'package:beta_balmer/utils/uidata.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Page8Act extends StatefulWidget {
+  final Actividad actividad;
+
+  const Page8Act({Key key, this.actividad}) : super(key: key);
+
   @override
   _Page8ActState createState() => _Page8ActState();
 }
@@ -12,11 +20,20 @@ class Page8Act extends StatefulWidget {
 class _Page8ActState extends State<Page8Act> {
 TextEditingController _controller = new TextEditingController();
 File _image;
+Actividad _actividad;
+bool create;
+
+void initState(){
+  _actividad=widget.actividad;
+  super.initState();
+}
+
 
 Future getImage() async {
   var img =await ImagePicker.pickImage(source: ImageSource.gallery);
-
+  
   setState(() {
+    print("image $img");
     _image = img;
   });
 }
@@ -111,11 +128,23 @@ Widget video() => Container(
                   TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
             onPressed: () {
+
+              _actividad.setVideo=_controller.text;
+              //_actividad.setFoto =_image.toString();
+
+              /////AQUI MANDAS A LLAMAR EL PUT/////
+               if(create){
                Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context)=> Page9Act(),
                     )
                   );
+               }
+               else
+               {
+                 showDialogSingleButton(context, "Error al crear la actividad", "Es posible que haya proporcionado un dato erroneo, Por favor intente de nuevo mas tarde", "OK");
+                 Navigator.of(context).pushNamedAndRemoveUntil(UIData.homeRoute, (Route <dynamic> route)=> false);
+               }
             }),
       );
 
@@ -158,5 +187,12 @@ Widget video() => Container(
       ),
       body: bodyData(context),
     );
+  }
+
+  void postActivity(Actividad activity) async {
+    
+    await requestCreateActivity(context, _actividad).then((s){
+        create = s;
+    });
   }
 }

@@ -29,7 +29,27 @@ Future<dynamic> post(BuildContext context, String url, {Map headers, body, encod
     });
   }
 
-Future<dynamic> get(String url) {
+  Future<dynamic> put(BuildContext context, String url, {Map headers, body, encoding}) {
+  bool trustSelfSigned = true;
+   HttpClient httpClient = new HttpClient()..badCertificateCallback =
+        ((X509Certificate cert, String host, int port) => trustSelfSigned);
+    IOClient ioClient = new IOClient(httpClient);
+    
+    return ioClient
+        .put(url, body: body, headers: headers, encoding: encoding)
+        .then((http.Response response) {
+      final String res = response.body;
+      final int statusCode = response.statusCode;
+      print(statusCode);
+
+      if (statusCode < 200 || statusCode > 400 || json == null) {
+        throw new Exception("Error al enviar datos");
+      }
+      return JsonDecoder().convert(res);
+    });
+  }
+
+Future<dynamic> getAll(String url) {
   bool trustSelfSigned = true;
    HttpClient httpClient = new HttpClient()..badCertificateCallback =
         ((X509Certificate cert, String host, int port) => trustSelfSigned);
@@ -53,5 +73,7 @@ Future<dynamic> get(String url) {
       return JsonDecoder().convert(res);
     });
   }
+
+
 
 

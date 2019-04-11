@@ -1,3 +1,5 @@
+import 'package:beta_balmer/model/actividad.dart';
+import 'package:beta_balmer/pages/createActivity/page5.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
@@ -5,6 +7,9 @@ import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:beta_balmer/utils/uidata.dart';
 
 class Pag4Act extends StatefulWidget {
+   final Actividad actividad;
+
+  const Pag4Act({Key key, this.actividad}) : super(key: key);
   @override
   _Pag4ActState createState() => _Pag4ActState();
 }
@@ -12,9 +17,19 @@ class Pag4Act extends StatefulWidget {
 class _Pag4ActState extends State<Pag4Act> {
   DateTime initialTimer;
   DateTime finalTimer;
+  Actividad _actividad;
+  String horaInicio;
+  String horaFinal;
 
-  var horaInicio;
-  var horaFinal;
+  @override
+  void initState() {
+    _actividad = widget.actividad;
+    print("EN PAGINA 4 ${_actividad.titulo}");
+    print("EN PAGINA 4 ${_actividad.descripcion}");
+    print("EN PAGINA 4 ${_actividad.numParticipantes}");
+    super.initState();
+  }
+
 
   Widget continueButton() => Container(
         decoration: new BoxDecoration(
@@ -33,8 +48,11 @@ class _Pag4ActState extends State<Pag4Act> {
             ),
             onPressed: () {
               print('Hora de inicio $horaInicio');
+              _actividad.setHoraS=horaInicio;
+              _actividad.setHoraE=horaFinal;
               print('Hora de fin $horaFinal');
-              Navigator.pushNamed(context, UIData.activityRoute5);
+              Navigator.of(context).push(MaterialPageRoute(
+       builder: (context) => Page5Act(actividad: _actividad,)));
             }),
       );
 
